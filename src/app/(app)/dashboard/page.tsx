@@ -9,7 +9,7 @@ import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
 import { Apiresponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader2, RefreshCcw } from "lucide-react";
+import { Link, Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { APIResource } from "openai/resource.mjs";
 import React, { useCallback, useEffect, useState } from "react";
@@ -119,7 +119,14 @@ const Dashboard = () => {
   };
 
   if (!session || !session.user) {
-    return <div>Please login</div>;
+    return (
+      <div className="text-center">
+        <div className="mb-4">Get Your Message Board</div>
+        <Link href={"/sign-in"}>
+          <Button>Sign-in</Button>
+        </Link>
+      </div>
+    );
   }
 
   const { username } = session?.user;
