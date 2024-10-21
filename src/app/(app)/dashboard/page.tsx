@@ -9,11 +9,13 @@ import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
 import { Apiresponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Link, Loader2, RefreshCcw } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { APIResource } from "openai/resource.mjs";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "@react-email/components";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -120,11 +122,21 @@ const Dashboard = () => {
 
   if (!session || !session.user) {
     return (
-      <div className="text-center">
-        <div className="mb-4">Get Your Message Board</div>
-        <Link href={"/sign-in"}>
-          <Button>Sign-in</Button>
-        </Link>
+      <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
+        <div className="flex flex-col space-y-3 p-10">
+          <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <div className="mb-4">Try sign-in again</div>
+          <Link href={"/sign-in"}>
+            <Button>Sign-in</Button>
+          </Link>
+        </div>
       </div>
     );
   }
